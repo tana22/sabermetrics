@@ -6,7 +6,7 @@ def CollectGames(urlbase,season,start=1,end=100):
         gameid = str(games).zfill(4)
         u = urlbase+gameid+".HTM"
         try:
-            nhl_soup.ScrapePlayByPlay(u,workingDir)
+            nhl_soup.ScrapePlayByPlay(u,workingDir,True)
         except:
             pass
 

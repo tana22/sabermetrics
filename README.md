@@ -2,12 +2,8 @@
 Scraping, munging and analysis of NHL data.
 
 ###Raw Format vs Condensed Format
-To change between the raw and condensed format you would comment and uncomment
-the following lines in *nhl_soup.py*.
+To print condensed format you would set `condensed = True` in the
+`ScrapePlayByPlay` function from the *nhl_soup.py* file.
 ```python
-try:
-    #WriteCSV(dir_,filename,soup)
-    cd.WriteCondensedFmt(dir_,filename,soup,info)
-    print dir_, filename, " -- collected."
+nhl_soup.ScrapePlayByPlay(url,workingDirectory,condensed=True)
 ```
-where `WriteCSV` is the raw format and `WriteCondensedFmt` is condensed.

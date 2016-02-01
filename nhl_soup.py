@@ -127,7 +127,7 @@ def ErrorReport(error,errfile):
     return 1
 
 ### Main scraping function.
-def ScrapePlayByPlay(url,mainDir=''):
+def ScrapePlayByPlay(url,mainDir='', condensed = True):
     err = mainDir + 'error.txt'
     r = requests.get(url)
     if(r.status_code>400):
@@ -155,8 +155,10 @@ def ScrapePlayByPlay(url,mainDir=''):
     if not os.path.exists(dir_):
         os.mkdir(dir_)
     try:
-        #WriteCSV(dir_,filename,soup)
-        cd.WriteCondensedFmt(dir_,filename,soup,info)
+        if(condensed):
+            cd.WriteCondensedFmt(dir_,filename,soup,info)
+        else:
+            WriteCSV(dir_,filename,soup)
         print dir_, filename, " -- collected."
     except:
         error = str(url) + " couldn't write to file"
