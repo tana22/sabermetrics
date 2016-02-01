@@ -58,12 +58,12 @@ events = {
 }
 
 shotTypes = {
-'Wrist' : 1,
-'Slap' : 2,
-'Snap' : 3,
-'Wrap-around' : 4,
-'Tip-In' : 5,
-'Backhand' : 6
+'Wrist' : '1',
+'Slap' : '2',
+'Snap' : '3',
+'Wrap-around' : '4',
+'Tip-In' : '5',
+'Backhand' : '6'
 }
 
 strength = {

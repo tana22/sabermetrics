@@ -39,8 +39,11 @@ def WriteCondensedFmt(directory,filename,soup,gameinfo):
             f.write(str(time[splt+3:])+ ',')
 
             #Event ID
-            evnt = str((line.contents[9].text).encode('utf-8')).translate(None,',').translate(None,';')
-            f.write(str(dicts.events[evnt]) + ',')
+            try:
+                evnt = str((line.contents[9].text).encode('utf-8')).translate(None,',').translate(None,';')
+                f.write(str(dicts.events[evnt]) + ',')
+            except:
+                f.write('-1' + ',')
             #print 'here'
             #Mung and write the Event Description
             des = str((line.contents[11].text).encode('utf-8')).translate(None,',').translate(None,';')
@@ -48,7 +51,9 @@ def WriteCondensedFmt(directory,filename,soup,gameinfo):
             if des[0] in team.keys():
                 des[0] = team[des[0]]
             des = ','.join(des)
+            print des
             f.write(str(des))
+            print 'here'
             ##Write the away and home players
             #Away players
             aPlayers = nhls.GetPlayersOnIce(line.contents[13].find_all({"font"}), awayPlayers)
