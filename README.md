@@ -7,3 +7,6 @@ To print condensed format you would set `condensed = True` in the
 ```python
 nhl_soup.ScrapePlayByPlay(url,workingDirectory,condensed=True)
 ```
+
+###Required data-scraping Python packages
+BeautifulSpoup and html5lib
