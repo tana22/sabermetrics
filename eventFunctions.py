@@ -31,10 +31,12 @@ def GoalDes(des):
     ind = des.index('Zone')
     location = ' '.join(des[ind-1:ind+1])
     distance = des[ind+1]
-    if len(playerNums[1:])>1:
-        assistlist = playerNums[1:3]
-    else:
+    if len(playerNums)==1:
+        assistlist = ['0','0']
+    elif len(playerNums) == 2:
         assistlist = [playerNums[1],'0']
+    else:
+        assistlist = playerNums[1:3]
     return [team,playerNums[0],'0',location,distance,shotType] + assistlist
 
 ##HIT
@@ -57,12 +59,18 @@ def FacDes(des):
 def MissDes(des):
     team = des[0]
     l = len(des)
-    playerNum = des[1]
-    #playerNum = des[1].replace('#','')
-    #shotType = des[3]
+    try:
+        playerNum = des[1].replace('#','')
+    except:
+        playerNum = des[1]
+    shotType = des[3]
+    if shotType in shotTypes.keys():
+        shotType = shotTypes[shotType]
+    else:
+        shotType = '0'
     location = ' '.join(des[l-4:l-2])
     distance = des[l-2]
-    return [team,playerNum,'0',location,distance,'0','0','0']
+    return [team,playerNum,'0',location,distance,shotType,'0','0']
 
 ##GIVE/TAKE
 def GiveTakeDes(des):

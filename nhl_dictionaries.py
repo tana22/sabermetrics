@@ -54,7 +54,8 @@ events = {
 'PEND' : 11,
 'GEND' : 12,
 'BLOCK' : 13,
-'SOC' : 14
+'SOC' : 14,
+'GOFF' : 15
 }
 
 shotTypes = {

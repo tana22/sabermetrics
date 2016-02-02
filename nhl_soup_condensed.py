@@ -14,14 +14,19 @@ def WriteCondensedFmt(directory,filename,soup,gameinfo):
     with open(directory+filename+'.csv','w') as f:
         ##Write opening lines.
         #print 'here'
-        f.write(' '.join(["#",gameinfo[0],"\n"]))
-        f.write(' '.join(["#",dicts.teams[gameinfo[2]],",",dicts.teams[gameinfo[3]], "\n"]))
-        f.write(' '.join(["#",gameinfo[4],',',gameinfo[5],"\n"]))
-        f.write("Event Number,Period,STR,Game-Time, Event,Acting Player,Recieving Player,Location,")
+        try:
+            f.write(' '.join(["#",gameinfo[0],"\n"]))
+            f.write(' '.join(["#",dicts.teams[gameinfo[2]],",",dicts.teams[gameinfo[3]], "\n"]))
+            f.write(' '.join(["#",gameinfo[4],',',gameinfo[5],"\n"]))
+        except:
+            print 'Error with writing GameInfo'
+
+        f.write("Event Number,Period,STR,Game-Time, Event,Team,Acting Player,Recieving Player,Location,")
         f.write("slot1,slot2,slot3,slot4,Away on Ice 1,")
         f.write("Away on Ice 2,Away on Ice 3,Away on Ice 4,Away on Ice 5,Away on Ice 6,")
         f.write("Home on Ice 1,Home on Ice 2,Home on Ice 3,Home on Ice 4,Home on Ice 5,")
         f.write("Home on Ice 6\n")
+
         for line in soup.find_all("tr", {"class" : "evenColor"}):
             #Event number
             f.write(str(line.contents[1].text.encode('utf-8'))+ ',')
@@ -47,20 +52,25 @@ def WriteCondensedFmt(directory,filename,soup,gameinfo):
             #print 'here'
             #Mung and write the Event Description
             des = str((line.contents[11].text).encode('utf-8')).translate(None,',').translate(None,';')
-            des = ef.MungDes(evnt,des)
+            try:
+                des = ef.MungDes(evnt,des)
+            except:
+                print "Error munging description " + '-' + filename
             if des[0] in team.keys():
                 des[0] = team[des[0]]
             des = ','.join(des)
-            print des
-            f.write(str(des))
-            print 'here'
+            f.write(str(des) + ',')
             ##Write the away and home players
             #Away players
-            aPlayers = nhls.GetPlayersOnIce(line.contents[13].find_all({"font"}), awayPlayers)
-            f.write(aPlayers)
+            try:
+                aPlayers = nhls.GetPlayersOnIce(line.contents[13].find_all({"font"}), awayPlayers)
+                hPlayers = nhls.GetPlayersOnIce(line.contents[15].find_all({"font"}),homePlayers)
+            except:
+                print "Error getting Players on Ice" + '-' + filename
+            f.write(aPlayers + ',')
             #Home players
-            hPlayers = nhls.GetPlayersOnIce(line.contents[15].find_all({"font"}),homePlayers)
             f.write(hPlayers)
+            #print hPlayers
             f.write('\n')
 
         #write player dictionaries

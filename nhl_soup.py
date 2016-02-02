@@ -60,7 +60,7 @@ def GetGameInfo(soup):
 
 ###Get players on ice using a content line from BeautifulSoup.
 def GetPlayersOnIce(line,teamDict=False):
-    onIce = ""
+    onIce = []
     for i in range(6):
         try:
             pl = line[i]
@@ -74,14 +74,14 @@ def GetPlayersOnIce(line,teamDict=False):
 
             if(teamDict != False):
                 teamDict[playerName] = playerNum
-                player = ' '.join([',',playerNum])
+                onIce.append(playerNum)
             else:
-                player = ' '.join([ ',', playerName , playerNum])
-            onIce = onIce+player
+                player = ' '.join([playerName , playerNum])
+                onIce.append(player)
         except:
-            onIce = onIce + '0,'
+            onIce.append('0')
 
-    return onIce
+    return ','.join(onIce)
 
 
 ###Writes the play by play data to a file in CSV format.
