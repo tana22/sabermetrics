@@ -2,7 +2,7 @@ import nhl_dictionaries as dicts
 import eventFunctions as ef
 import nhl_soup as nhls
 
-def WriteCondensedFmt(directory,filename,soup,gameinfo):
+def WriteCondensedFmt(directory,filename,soup,gameinfo, collectData = False):
     ##Create away-home dict:
     away = dicts.teams[gameinfo[2]]
     home = dicts.teams[gameinfo[3]]
@@ -11,6 +11,11 @@ def WriteCondensedFmt(directory,filename,soup,gameinfo):
     awayPlayers = dict()
     homePlayers = dict()
     #print 'here'
+    if(collectData):
+        AwayStats, HomeStats = {'Shots':0, 'Miss' : 0, 'Blocked':0},
+         {'Shots':0, 'Miss' : 0, 'Blocked':0}
+        corsi= 0
+
     with open(directory+filename+'.csv','w') as f:
         ##Write opening lines.
         #print 'here'
@@ -48,7 +53,9 @@ def WriteCondensedFmt(directory,filename,soup,gameinfo):
                 evnt = str((line.contents[9].text).encode('utf-8')).translate(None,',').translate(None,';')
                 f.write(str(dicts.events[evnt]) + ',')
             except:
-                f.write('-1' + ',')
+                evnt = '-1'
+                f.write(evnt + ',')
+
             #print 'here'
             #Mung and write the Event Description
             des = str((line.contents[11].text).encode('utf-8')).translate(None,',').translate(None,';')
@@ -58,8 +65,8 @@ def WriteCondensedFmt(directory,filename,soup,gameinfo):
                 print "Error munging description " + '-' + filename
             if des[0] in team.keys():
                 des[0] = team[des[0]]
-            des = ','.join(des)
-            f.write(str(des) + ',')
+            description = ','.join(des)
+            f.write(str(description) + ',')
             ##Write the away and home players
             #Away players
             try:
@@ -73,6 +80,30 @@ def WriteCondensedFmt(directory,filename,soup,gameinfo):
             #print hPlayers
             f.write('\n')
 
+            if(collectData):
+                if(evnt == 'SHOT' or evnt == 'BLOCK' or evnt == 'MISS'):
+                    if(des[0]) == '1':
+                        if(strn == '0'):
+                            corsi -= 1
+
+                        HomeStats['Shots'] += 1
+                        if(evnt == 'BLOCK'):
+                            HomeStats['Blocked'] +=1
+                        elif(evnt == 'Miss'):
+                            HomeStats['Miss'] +=1
+
+                    elif(des[0] == '0'):
+                        if(strn == '0'):
+                            corsi += 1
+
+                        AwayStats['Shots'] += 1
+                        if(evnt == 'BLOCK'):
+                            AwayStats['Blocked'] +=1
+                        elif(evnt == 'MISS'):
+                            AwayStats['Miss'] +=1
+
+
+
         #write player dictionaries
         f.write("# Away Players\n")
         for key in awayPlayers.keys():
@@ -81,4 +112,10 @@ def WriteCondensedFmt(directory,filename,soup,gameinfo):
         for key in homePlayers.keys():
             f.write(''.join([homePlayers[key],',',key,'\n']))
 
+        if(collectData):
+            #CORSI with away team - for, home team -against
+            corsi = AwayStats['Shots']-HomeStats['Shots']
+            fenwick = corsi - (AwayStats['Blocked']-HomeStats['Blocked'])
+
+            return [corsi,AwayStats,HomeStats]
     return 1

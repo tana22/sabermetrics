@@ -156,7 +156,7 @@ def ScrapePlayByPlay(url,mainDir='', condensed = True):
         os.mkdir(dir_)
     try:
         if(condensed):
-            cd.WriteCondensedFmt(dir_,filename,soup,info)
+            scrapeInfo = cd.WriteCondensedFmt(dir_,filename,soup,info, True)
         else:
             WriteCSV(dir_,filename,soup)
         print dir_, filename, " -- collected."
