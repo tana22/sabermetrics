@@ -9,4 +9,4 @@ nhl_soup.ScrapePlayByPlay(url,workingDirectory,condensed=True)
 ```
 
 ###Required data-scraping Python packages
-BeautifulSoup and html5lib
+BeautifulSoup, html5lib, and Pandas.
