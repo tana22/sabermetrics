@@ -103,6 +103,16 @@ def BlockDes(des):
     location = ' '.join(des[l-2:])
     return [team, players[0], players[1], location,'0','0','0','0']
 
+##
+def StopDes(des):
+    des = ' '.join(des)
+    print des
+    if(des in stoppage.keys()):
+        des = stoppage[des]
+    else:
+        des = '0'
+    return [des,'0','0','0','0','0','0','0']
+
 ##Others -- Returns Description
 def ReturnDes(des):
     return [str(des),'0','0','0','0','0','0','0']
@@ -119,7 +129,8 @@ def MungDes(event,des):
     'GIVE' : GiveTakeDes,
     'TAKE' : GiveTakeDes,
     'PENL' : PenlDes,
-    'BLOCK' : BlockDes}
+    'BLOCK' : BlockDes,
+    'STOP' : StopDes}
     if event in fcnDict.keys():
         des = des.split(' ')
         return fcnDict[event](des)

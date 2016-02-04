@@ -80,6 +80,15 @@ zone = {
 }
 
 stoppage = {
-
-
+'GOALIE STOPPED' : '1',
+'OFFSIDE' : '2',
+'PUCK IN CROWD' : '3',
+'PUCK IN NETTING' : '4',
+'HIGH STICK' : '5',
+'ICING' : '6',
+'RINK REPAIR' : '7',
+'PUCK FROZEN' : '8',
+'TV TIMEOUT' : '9',
+'PUCK IN BENCHES':'10',
+'HAND PASS' : '11'
 }
