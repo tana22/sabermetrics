@@ -12,13 +12,11 @@ def WriteCondensedFmt(directory,filename,soup,gameinfo, collectData = False):
     homePlayers = dict()
     #print 'here'
     if(collectData):
-        AwayStats, HomeStats = {'Shots':0, 'Miss' : 0, 'Blocked':0},
-         {'Shots':0, 'Miss' : 0, 'Blocked':0}
+        AwayStats = {'Shots': 0, 'Miss' : 0, 'Blocked': 0}
+        HomeStats = {'Shots': 0, 'Miss' : 0, 'Blocked': 0}
         corsi= 0
 
     with open(directory+filename+'.csv','w') as f:
-        ##Write opening lines.
-        #print 'here'
         try:
             f.write(' '.join(["#",gameinfo[0],"\n"]))
             f.write(' '.join(["#",dicts.teams[gameinfo[2]],",",dicts.teams[gameinfo[3]], "\n"]))
@@ -113,9 +111,9 @@ def WriteCondensedFmt(directory,filename,soup,gameinfo, collectData = False):
             f.write(''.join([homePlayers[key],',',key,'\n']))
 
         if(collectData):
-            #CORSI with away team - for, home team -against
             corsi = AwayStats['Shots']-HomeStats['Shots']
-            fenwick = corsi - (AwayStats['Blocked']-HomeStats['Blocked'])
+            AOnNet = AwayStats['Shots'] - AwayStats['Blocked'] - AwayStats['Miss']
+            HOnNet = HomeStats['Shots'] - HomeStats['Blocked'] - HomeStats['Miss']
+            return [corsi, AwayStats['Shots'], HomeStats['Shots'], AOnNet, HOnNet, gameinfo[4],gameinfo[5], awayPlayers.keys(), homePlayers.keys()]
 
-            return [corsi,AwayStats,HomeStats]
     return 1

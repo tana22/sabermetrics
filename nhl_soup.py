@@ -29,7 +29,7 @@ def GetGameInfo(soup):
             print "Can't get game date"
 
     gameDate = (gameDate.replace(',','')).split(' ')
-    fmtDate = '-'.join([gameDate[2].zfill(2), dicts.month[gameDate[1]], gameDate[3]])
+    fmtDate = '/'.join([gameDate[3], dicts.month[gameDate[1]], gameDate[2].zfill(2)])
 
     ##Get Away and Home teams:
     line_v = soup.find_all("table",{"id":"Visitor"})[0]
@@ -127,7 +127,7 @@ def ErrorReport(error,errfile):
     return 1
 
 ### Main scraping function.
-def ScrapePlayByPlay(url,mainDir='', condensed = True):
+def ScrapePlayByPlay(url,mainDir='', condensed = True, buildDB = False):
     err = mainDir + 'error.txt'
     r = requests.get(url)
     if(r.status_code>400):
@@ -135,7 +135,6 @@ def ScrapePlayByPlay(url,mainDir='', condensed = True):
         ErrorReport(error,err)
         print error
         return 1
-
     soup = BeautifulSoup(r.content,'html5lib')
 ##Get General info
     try:
@@ -145,18 +144,22 @@ def ScrapePlayByPlay(url,mainDir='', condensed = True):
         ErrorReport(error,err)
         print error
         return 0
-    filename = info[1]
+
+    visitor, home = dicts.teams[info[2]], dicts.teams[info[3]]
+    filename = '-'.join([visitor,home])
     dir_ = mainDir + info[0] + '/'
     ###Create csv and get info
     if(mainDir != ''):
-        if not os.path.exists(mainDir):
-            os.mkdir(mainDir)
-
+        if not os.path.exists(dir_):
+            os.makedirs(dir_)
+    '''
     if not os.path.exists(dir_):
         os.mkdir(dir_)
+    '''
+
     try:
         if(condensed):
-            scrapeInfo = cd.WriteCondensedFmt(dir_,filename,soup,info, True)
+            scrapeInfo = cd.WriteCondensedFmt(dir_,filename,soup,info, buildDB)
         else:
             WriteCSV(dir_,filename,soup)
         print dir_, filename, " -- collected."
@@ -166,6 +169,9 @@ def ScrapePlayByPlay(url,mainDir='', condensed = True):
         print error
         pass
 
+
+    if(condensed and buildDB):
+        return [info[0],visitor,home] + scrapeInfo
     return 1
 
 
