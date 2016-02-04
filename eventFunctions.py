@@ -106,7 +106,6 @@ def BlockDes(des):
 ##
 def StopDes(des):
     des = ' '.join(des)
-    print des
     if(des in stoppage.keys()):
         des = stoppage[des]
     else:
