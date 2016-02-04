@@ -1,3 +1,6 @@
 testing/
 *.pyc
 Games/
+nhl_search.py
+playerDataBase.csv
+gameDataBase.csv

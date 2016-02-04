@@ -61,8 +61,13 @@ def WriteCondensedFmt(directory,filename,soup,gameinfo, collectData = False):
                 des = ef.MungDes(evnt,des)
             except:
                 print "Error munging description " + '-' + filename
+            ##Check dicts for teams and zones.    
             if des[0] in team.keys():
                 des[0] = team[des[0]]
+
+            if des[3] in dicts.zone.keys():
+                des[3] = dicts.zone[des[3]]
+
             description = ','.join(des)
             f.write(str(description) + ',')
             ##Write the away and home players

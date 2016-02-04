@@ -39,12 +39,9 @@ def CollectGames(urlbase,season,start,end, buildDB = False):
 
 def WriteDataBase():
     df_game = pd.DataFrame(gameDB)
-    #df_players = pd.DataFrame(playerDB)
-    print df_game
-    #print df_player
-
-    return 1
-
+    df_game.to_csv('gameDataBase.csv')
+    df_players = pd.DataFrame.from_dict(playerDB,'index')
+    df_players.to_csv('playerDataBase.csv')
 
 
 ## 07/08 season collection

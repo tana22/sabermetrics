@@ -41,21 +41,21 @@ teams = {'ANAHEIM DUCKS' : 'ANA',
 }
 
 events = {
-'SHOT' : 1,
-'GOAL' : 2,
-'STOP' : 3,
-'FAC' : 4,
-'HIT' : 5,
-'PENL' : 6,
-'MISS' : 7,
-'TAKE' : 8,
-'GIVE' : 9,
-'PSTR' : 10,
-'PEND' : 11,
-'GEND' : 12,
-'BLOCK' : 13,
-'SOC' : 14,
-'GOFF' : 15
+'SHOT' : '1',
+'GOAL' : '2',
+'STOP' : '3',
+'FAC' : '4',
+'HIT' : '5',
+'PENL' : '6',
+'MISS' : '7',
+'TAKE' : '8',
+'GIVE' : '9',
+'PSTR' : '10',
+'PEND' : '11',
+'GEND' : '12',
+'BLOCK' : '13',
+'SOC' : '14',
+'GOFF' : '15'
 }
 
 shotTypes = {
@@ -71,4 +71,15 @@ strength = {
 'SH' : '-1',
 'EV' : '0',
 'PP' : '1'
+}
+
+zone = {
+'Neu. Zone' : '1',
+'Def. Zone' : '2',
+'Off. Zone' : '3'
+}
+
+stoppage = {
+
+
 }
