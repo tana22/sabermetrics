@@ -41,6 +41,7 @@ teams = {'ANAHEIM DUCKS' : 'ANA',
 }
 
 events = {
+'Unknown' : '0',
 'SHOT' : '1',
 'GOAL' : '2',
 'STOP' : '3',
@@ -59,6 +60,7 @@ events = {
 }
 
 shotTypes = {
+'Unknown' : '0',
 'Wrist' : '1',
 'Slap' : '2',
 'Snap' : '3',
@@ -80,6 +82,7 @@ zone = {
 }
 
 stoppage = {
+'Unknown' : '0',
 'GOALIE STOPPED' : '1',
 'OFFSIDE' : '2',
 'PUCK IN CROWD' : '3',

@@ -9,7 +9,7 @@ from nhl_dictionaries import *
 def ShotDes(des):
     team = des[0]
     l = len(des)
-    playerNum = des[3]
+    playerNum = des[3].replace('#','')
     shotType = des[5]
     if shotType in shotTypes.keys():
         shotType = shotTypes[shotType]
@@ -59,10 +59,7 @@ def FacDes(des):
 def MissDes(des):
     team = des[0]
     l = len(des)
-    try:
-        playerNum = des[1].replace('#','')
-    except:
-        playerNum = des[1]
+    playerNum = des[1].replace('#','')
     shotType = des[3]
     if shotType in shotTypes.keys():
         shotType = shotTypes[shotType]
@@ -75,7 +72,7 @@ def MissDes(des):
 ##GIVE/TAKE
 def GiveTakeDes(des):
     team = des[0][:3]
-    playerNum = des[2]
+    playerNum = des[2].replace('#','')
     #playerNum = des[2].remove('#','')
     location = ' '.join(des[4:])
     return [team,playerNum,'0',location,'0','0','0','0']
@@ -112,9 +109,9 @@ def StopDes(des):
         des = '0'
     return [des,'0','0','0','0','0','0','0']
 
-##Others -- Returns Description
+##Others -- Returns Nothing.
 def ReturnDes(des):
-    return [str(des),'0','0','0','0','0','0','0']
+    return ['0','0','0','0','0','0','0','0']
 
 
 ##Event + Description Mung
