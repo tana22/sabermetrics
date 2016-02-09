@@ -47,6 +47,7 @@ class NHLSearch():
 
         ##Create Game Database
         self.gameDB = pd.DataFrame.from_csv(pathToGameDB)
+        self.gameDB = self.gameDB.set_index('ID')
 
 def IDtoPath(ID):
     year = ID[:4]
@@ -58,11 +59,10 @@ def IDtoPath(ID):
         season = ''.join(['SE',str(int(year)-1),year])
     else:
         season = ''.join(['SE',year,str(int(year)+1)])
-        newYear = year
 
     game = '-'.join([away,home])+'.csv'
 
-    return '/'.join(['Games',season,newYear,month,day,game])
+    return '/'.join(['Games',season,year,month,day,game])
 
 def GetGames(listofGames):
     games = []

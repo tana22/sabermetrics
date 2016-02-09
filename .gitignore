@@ -4,3 +4,4 @@ Games/
 nhl_search.py
 playerDataBase.csv
 gameDataBase.csv
+analysis.py

@@ -115,9 +115,6 @@ def WriteCSV(directory,filename,soup):
             f.write(GetPlayersOnIce(line.contents[15].find_all({"font"}))+ '\n')
     return 1
 
-## Writes the play by play in the condensed format as outlined in the T&P sabermetrics manual
-#def WriteFormatted(directory,filename,soup):
-
 
 ## Writes any errors to a file.
 def ErrorReport(error,errfile):

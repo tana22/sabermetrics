@@ -24,7 +24,7 @@ def WriteCondensedFmt(directory,filename,soup,gameinfo, collectData = False):
         except:
             print 'Error with writing GameInfo'
 
-        f.write("Event Number,Period,STR,Game-Time, Event,Team,Acting Player,Recieving Player,Location,")
+        f.write("Event Number,Period,STR,Game-Time,Event,Team,Acting Player,Recieving Player,Location,")
         f.write("slot1,slot2,slot3,slot4,Away on Ice 1,")
         f.write("Away on Ice 2,Away on Ice 3,Away on Ice 4,Away on Ice 5,Away on Ice 6,")
         f.write("Home on Ice 1,Home on Ice 2,Home on Ice 3,Home on Ice 4,Home on Ice 5,")
@@ -61,7 +61,7 @@ def WriteCondensedFmt(directory,filename,soup,gameinfo, collectData = False):
                 des = ef.MungDes(evnt,des)
             except:
                 print "Error munging description " + '-' + filename
-            ##Check dicts for teams and zones.    
+            ##Check dicts for teams and zones.
             if des[0] in team.keys():
                 des[0] = team[des[0]]
 

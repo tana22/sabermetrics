@@ -1,10 +1,13 @@
 import nhl_soup
 import pandas as pd
+import os
+import time
 ###Function to iterate over URLS
 gameDB = {'Date' : [],'Season':[], 'Away': [], 'Home' : [],'Away Score': [], 'Home Score': [],
 'Corsi': [], 'Away Shots': [],'Home Shots':[], 'Away On Net': [], 'Home On Net': [],'ID': []}
 playerDB = {}
 def CollectGames(urlbase,season,start,end, buildDB = False):
+    t0 = time.time()
     workingDir = "Games/" + "SE" + season + "/"
     for games in xrange(start,end+1):
         gameid = str(games).zfill(4)
@@ -34,13 +37,24 @@ def CollectGames(urlbase,season,start,end, buildDB = False):
                         playerDB[player] = [gameID]
         except:
             pass
+    print 'Scraping completed in: ', int(time.time()-t0), 'seconds'
 
 
 
 def WriteDataBase():
     df_game = pd.DataFrame(gameDB)
-    df_game.to_csv('gameDataBase.csv')
     df_players = pd.DataFrame.from_dict(playerDB,'index')
+
+    if(os.path.isfile('gameDataBase.csv')):
+        old_df_game = pd.DataFrame.from_csv('gameDataBase.csv')
+        combined = pd.concat([old_df_game,df_game])
+        df_game = combined
+    if(os.path.isfile('playerDataBase.csv')):
+        old_df_players = pd.DataFrame.from_csv('playerDataBase.csv')
+        combined = pd.concat([old_df_players,df_players],join='outer',axis=1)
+        df_players = combined
+
+    df_game.to_csv('gameDataBase.csv')
     df_players.to_csv('playerDataBase.csv')
 
 
@@ -48,7 +62,7 @@ def WriteDataBase():
 ##Preseason -> PL01, Regular season -> PL02, Playoffs -> PL03. Try running
 #this portion first (PL01)
 
-season = "20072008"
+season = "20132014"
 '''
 url = "http://www.nhl.com/scores/htmlreports/" + season + "/PL01"
 end = 105
@@ -57,8 +71,8 @@ CollectGames(url,season,1,10)
 
 ### PL02 seems to be the entire regular season, it takes roughly 1.5 hrs to scrape
 
-url = "http://www.nhl.com/scores/htmlreports/" + season + "/PL02"
-#end = 1230
-end = 5
+url = "http://www.nhl.com/scores/htmlreports/" + season + "/PL03"
+end = 1230
+#end = 500
 CollectGames(url,season,1,end,True)
 WriteDataBase()

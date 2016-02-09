@@ -1,9 +1,7 @@
-##The following are the dictionaries used in the NHL soup functions
+##The following are the dictionaries and inverse dictionaries used in the
+##NHL soup functions
 
-##Months
-month = {'January' : '01', 'February' : '02', 'March' : '03', 'April' : '04', 'May' : '05', 'June' : '06',
-'July' : '07', 'August': '08', 'September':'09','October':'10','November':'11','December':'12' }
-
+##DICTIONARIES
 ##Teams
 teams = {'ANAHEIM DUCKS' : 'ANA',
 'ATLANTA THRASHERS' : 'ATL',
@@ -95,3 +93,20 @@ stoppage = {
 'PUCK IN BENCHES':'10',
 'HAND PASS' : '11'
 }
+
+
+###INVERSE DICTIONARIES
+
+inv_teams = {v: k for k, v in teams.items()}
+inv_events = {v: k for k, v in events.items()}
+inv_shotTypes = {v: k for k, v in shotTypes.items()}
+inv_strength = {v: k for k, v in strength.items()}
+inv_zone = {v: k for k, v in zone.items()}
+inv_stoppage = {v: k for k, v in stoppage.items()}
+
+
+
+###Helper dicts
+##Months
+month = {'January' : '01', 'February' : '02', 'March' : '03', 'April' : '04', 'May' : '05', 'June' : '06',
+'July' : '07', 'August': '08', 'September':'09','October':'10','November':'11','December':'12' }
