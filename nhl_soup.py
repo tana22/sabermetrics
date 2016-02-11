@@ -27,7 +27,6 @@ def GetGameInfo(soup):
             gameDate = str(''.join(line.contents[1].text.encode('utf-8').splitlines()))
         except:
             print "Can't get game date"
-
     gameDate = (gameDate.replace(',','')).split(' ')
     fmtDate = '/'.join([gameDate[3], dicts.month[gameDate[1]], gameDate[2].zfill(2)])
 
@@ -36,20 +35,29 @@ def GetGameInfo(soup):
     line_v = line_v.contents[1].text.splitlines()
     line_h = soup.find_all("table",{"id":"Home"})[0]
     line_h = line_h.contents[1].text.splitlines()
+
     try:
         vis = str(line_v[15].encode('utf-8'))
-        indv = vis.index("Game")
         sc_v = line_v[8].encode('utf-8')
         home = str(line_h[15].encode('utf-8'))
-        indh = home.index("Game")
         sc_h = line_h[8].encode('utf-8')
+        try:
+            indv = vis.index("Game")
+            indh = home.index("Game")
+        except:
+            indv = vis.index("Match")
+            indh = home.index("Match")
     except:
         vis = str(line_v[19].encode('utf-8'))
-        indv = vis.index("Match")
         sc_v = line_v[10].encode('utf-8')
         home = str(line_h[19].encode('utf-8'))
-        indh = home.index("Match")
         sc_h = line_h[10].encode('utf-8')
+        try:
+            indv = vis.index("Game")
+            indh = home.index("Game")
+        except:
+            indv = vis.index("Match")
+            indh = home.index("Match")
 
     vis = vis[:indv]
     home = home[:indh]
@@ -153,7 +161,6 @@ def ScrapePlayByPlay(url,mainDir='', condensed = True, buildDB = False):
     if not os.path.exists(dir_):
         os.mkdir(dir_)
     '''
-
     try:
         if(condensed):
             scrapeInfo = cd.WriteCondensedFmt(dir_,filename,soup,info, buildDB)
@@ -178,9 +185,8 @@ def main():
     #url = "http://www.nhl.com/scores/htmlreports/20072008/PL010002.HTM"
     #url = "http://www.nhl.com/scores/htmlreports/20152016/PL020355.HTM"
     #url = "http://www.nhl.com/scores/htmlreports/20072008/PL010034.HTM"
-    url = 'http://www.nhl.com/scores/htmlreports/20072008/PL010001.HTM'
-    ScrapePlayByPlay(url,"testing/")
-    return True
+    #url = 'http://www.nhl.com/scores/htmlreports/20082009/PL020011.HTM'
+    #ScrapePlayByPlay(url,"testing/")
 
 
 if __name__ == "__main__":

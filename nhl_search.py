@@ -21,9 +21,15 @@ class Game():
                 elif(line[0] == '# Home Players'):
                     hometm = True
                 elif(hometm):
-                        self.hometeam[line[0]] = line[1]
+                        try:
+                            self.hometeam[line[0]] = line[1]
+                        except:
+                            pass
                 elif(awaytm):
-                        self.awayteam[line[0]] = line[1]
+                        try:
+                            self.awayteam[line[0]] = line[1]
+                        except:
+                            pass
 
             df = pd.DataFrame(events[1:])
             df.transpose
@@ -35,19 +41,23 @@ class NHLSearch():
 
     ##Constructor, initializes the search databases
     def __init__(self,
-        pathToGameDB = 'gameDataBase.csv', pathToPlayerDB = 'playerDataBase.csv'):
+        pathToGameDB = 'gameDataBase.csv', pathToPlayerDB = 'playerDataBase.csv', games = True, players = True):
 
         ##Create Player Dictionary
-        self.playerDB = dict()
-        with open(pathToPlayerDB,'r') as f:
-            for i,lines in enumerate(f.readlines()):
-                if i != 0:
-                    line = [i for i in lines.replace('\n','').split(',') if i!='']
-                    self.playerDB[line[0]] = line[1:]
+        if(players):
+            self.playerDB = dict()
+            with open(pathToPlayerDB,'r') as f:
+                for i,lines in enumerate(f.readlines()):
+                    if i != 0:
+                        line = [i for i in lines.replace('\n','').split(',') if i!='']
+                        if len(line) !=0:
+                            self.playerDB[line[0]] = line[1:]
 
         ##Create Game Database
-        self.gameDB = pd.DataFrame.from_csv(pathToGameDB)
-        self.gameDB = self.gameDB.set_index('ID')
+        if(games):
+            self.gameDB = pd.DataFrame.from_csv(pathToGameDB)
+            self.gameDB = self.gameDB.set_index('ID')
+
 
 def IDtoPath(ID):
     year = ID[:4]
@@ -74,9 +84,9 @@ def GetGames(listofGames):
 
 
 def main():
-    d = '20071003OTTTOR'
-    y = GetGames([d])
-    print y[0].playbyplay
+    #d = '20071003OTTTOR'
+    #y = GetGames([d])
+    #print y[0].playbyplay
 
 if __name__ == "__main__":
   main()

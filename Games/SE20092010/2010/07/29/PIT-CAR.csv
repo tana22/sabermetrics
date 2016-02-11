@@ -1,0 +1,20 @@
+# 2010/07/29 
+# PIT , CAR 
+# 0 , 0 
+Event Number,Period,STR,Game-Time,Event,Team,Acting Player,Recieving Player,Location,slot1,slot2,slot3,slot4,Away on Ice 1,Away on Ice 2,Away on Ice 3,Away on Ice 4,Away on Ice 5,Away on Ice 6,Home on Ice 1,Home on Ice 2,Home on Ice 3,Home on Ice 4,Home on Ice 5,Home on Ice 6
+1,1, ,20:00,10,0,0,0,0,0,0,0,0,11,13,9,3,7,1,8,15,13,4,6,49
+2,1,0,20:00,4,1,13,4,1,0,0,0,0,11,13,9,3,7,1,8,15,13,4,6,49
+# Away Players
+3,ALEX GOLIGOSKI
+9,PASCAL DUPUIS
+13,BILL GUERIN
+1,BRENT JOHNSON
+11,JORDAN STAAL
+7,MARK EATON
+# Home Players
+8,MATT CULLEN
+13,RAY WHITNEY
+6,TIM GLEASON
+4,AARON WARD
+15,TUOMO RUUTU
+49,MICHAEL LEIGHTON

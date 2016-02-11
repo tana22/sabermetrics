@@ -3,10 +3,10 @@ import pandas as pd
 import os
 import time
 ###Function to iterate over URLS
-gameDB = {'Date' : [],'Season':[], 'Away': [], 'Home' : [],'Away Score': [], 'Home Score': [],
-'Corsi': [], 'Away Shots': [],'Home Shots':[], 'Away On Net': [], 'Home On Net': [],'ID': []}
-playerDB = {}
 def CollectGames(urlbase,season,start,end, buildDB = False):
+    gameDB = {'Date' : [],'Season':[], 'Away': [], 'Home' : [],'Away Score': [], 'Home Score': [],
+    'Corsi': [], 'Away Shots': [],'Home Shots':[], 'Away On Net': [], 'Home On Net': [],'ID': []}
+    playerDB = {}
     t0 = time.time()
     workingDir = "Games/" + "SE" + season + "/"
     for games in xrange(start,end+1):
@@ -38,10 +38,11 @@ def CollectGames(urlbase,season,start,end, buildDB = False):
         except:
             pass
     print 'Scraping completed in: ', int(time.time()-t0), 'seconds'
+    return [gameDB, playerDB]
 
 
 
-def WriteDataBase():
+def WriteDataBase(gameDB,playerDB):
     df_game = pd.DataFrame(gameDB)
     df_players = pd.DataFrame.from_dict(playerDB,'index')
 
@@ -61,18 +62,22 @@ def WriteDataBase():
 ## 07/08 season collection
 ##Preseason -> PL01, Regular season -> PL02, Playoffs -> PL03. Try running
 #this portion first (PL01)
-
-season = "20132014"
 '''
-url = "http://www.nhl.com/scores/htmlreports/" + season + "/PL01"
-end = 105
-CollectGames(url,season,1,10)
-'''
-
-### PL02 seems to be the entire regular season, it takes roughly 1.5 hrs to scrape
+season = "20142015"
 
 url = "http://www.nhl.com/scores/htmlreports/" + season + "/PL03"
-end = 1230
-#end = 500
-CollectGames(url,season,1,end,True)
-WriteDataBase()
+db = CollectGames(url,season,111,500,True)
+WriteDataBase(db[0],db[1])
+
+### PL02 seems to be the entire regular season, it takes roughly 1.5 hrs to scrape
+seasons = ['20082009']
+for season in seasons:
+    #Regular season
+    url = "http://www.nhl.com/scores/htmlreports/" + season + "/PL02"
+    db = CollectGames(url,season,1,1230,True)
+    WriteDataBase(db[0],db[1])
+    #playoffs
+    url = "http://www.nhl.com/scores/htmlreports/" + season + "/PL03"
+    db = CollectGames(url,season,111,500,True)
+    WriteDataBase(db[0],db[1])
+'''
