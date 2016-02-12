@@ -1,9 +1,9 @@
-''' This is the module used for searching through the scraped play by play data.'''
+""" This is the module used for searching through the scraped play by play data."""
 
 import pandas as pd
 
 class Game():
-    '''Game object - holds game data including, scores, teams, date, and players and play by play.'''
+    """Game object - holds game data including, scores, teams, date, and players and play by play."""
     def __init__(self,path):
         with open(path,'r') as f_in:
             lines = [l.strip().split(',') for l in f_in.readlines()]
@@ -41,7 +41,7 @@ class Game():
 
 
 class NHLSearch():
-    '''The NHLSearch object contains both the game and player databases.'''
+    """The NHLSearch object contains both the game and player databases."""
     ##Constructor, initializes the search databases
     def __init__(self,
         pathToGameDB = 'gameDataBase.csv', pathToPlayerDB = 'playerDataBase.csv', games = True, players = True):
@@ -78,7 +78,7 @@ def IDtoPath(ID):
     return '/'.join(['Games',season,year,month,day,game])
 
 def GetGames(listofGames):
-    '''GetGames converts a list of game IDs into Game objects'''
+    """GetGames converts a list of game IDs into Game objects"""
     games = []
     for ID in listofGames:
         path = IDtoPath(ID)
