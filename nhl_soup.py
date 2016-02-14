@@ -181,6 +181,7 @@ def ScrapePlayByPlay(url,mainDir='', condensed = True, buildDB = False):
 
 
 def main():
+    return 0
     ### TEST URLS
     #url = "http://www.nhl.com/scores/htmlreports/20072008/PL010002.HTM"
     #url = "http://www.nhl.com/scores/htmlreports/20152016/PL020355.HTM"
