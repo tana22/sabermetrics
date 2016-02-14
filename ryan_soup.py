@@ -207,7 +207,7 @@ def getEventPos(array):
         item=array[n]
         
         # check for events that we like
-        if array[n] =='\xc2\xa0' or array[n] =='GP' or \\
+        if array[n] =='\xc2\xa0' or array[n] =='GP' or \
            array[n] =='EventG=GoalP=Penalty':
             #filter out ones that we dont
             if array[n+1]!='\xc2\xa0' and array[n+1]!='Per':
