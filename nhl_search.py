@@ -37,6 +37,8 @@ class Game():
             df = pd.DataFrame(events[1:])
             df.transpose
             df.columns = events[0]
+            df['Away Team'] = self.away
+            df['Home Team'] = self.home
             self.playbyplay = df.set_index('Event Number')
 
 
